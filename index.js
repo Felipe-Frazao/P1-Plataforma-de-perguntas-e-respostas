@@ -23,6 +23,12 @@ app.post("/salvarpergunta",(req, res) => {
     res.send("Formulário recebido! titulo " + titulo + " " + " descricao " + descricao);
 });
 
+app.post("/salvarpergunta",(req, res) => {
+    var titulo = req.body.titulo;
+    var descricao = req.body.descricao;
+    res.send("Formulário recebido! titulo " + titulo + " " + " descricao " + descricao);
+});
+
 app.listen(8080, ()=> {
     console.log("servidor conectado!!")
 });
