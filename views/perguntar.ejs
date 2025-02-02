@@ -8,12 +8,11 @@
                 <h3>Realize a sua Perguntas</h3>
             </div>
             <div class="card-body">
-                <form >
-                    <br>
-                    <label for="">Titulo</label>
-                    <input type="text" name="" id="" placeholder="Titulo" class="form-control">
-                    <label for="">Descrição</label>
-                    <textarea name="" id="" placeholder="Descreva sua pergunta aqui" class="form-control"></textarea>
+                <form method="POST" action="/salvarPergunta"><br>
+                    <label>Titulo</label>
+                    <input type="text" placeholder="Titulo" class="form-control" name="titulo">
+                    <label>Descrição</label>
+                    <textarea placeholder="Descreva sua pergunta aqui" class="form-control" name="descricao"></textarea>
                     <br><button class="btn btn-success">Perguntar</button>
                 </form>
             </div>
@@ -21,3 +20,4 @@
     </div>
 </body>
 <%- include("partials/footer.ejs") %>
+
