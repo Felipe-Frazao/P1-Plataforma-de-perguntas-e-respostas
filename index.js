@@ -4,6 +4,7 @@ const bodyParser = require("body-parser"); //responsavel pela conversao dos dado
 const connection = require("./database/database");
 const perguntaModel = require("./database/Pergunta");
 const Pergunta = require("./database/Pergunta");
+const { where } = require("sequelize");
 
 //Database
     
@@ -28,9 +29,11 @@ app.use(bodyParser.json());//Permiti a leitura de dados enviados via json utiliz
 //Rotas
 //CONSULTA
 app.get("/", (req,res) => {
-    Pergunta.findAll({raw: true}).then(perguntas => {
+    Pergunta.findAll({raw: true, order:[
+        ['id','DESC']  //DESC = do maior para o menor e ASC = menor para maior 
+    ]}).then(p => {
         res.render("index", {
-            perguntas : perguntas
+            pergunt : p
         });
     });
 });
@@ -49,6 +52,19 @@ app.post("/salvarpergunta",(req, res) => {
         descricao: descricao
     }).then(()=>{
         res.redirect("/");
+    });
+});
+
+app.get("/pergunta/:id", (req,res) => {
+    var id = req.params.id;
+    Pergunta.findOne({
+        where: {id : id}
+    }).then(p => {
+        if (p != undefined) { //se encontrada
+            res.render("pergunta");
+        } else {//Nao encontrada
+            res.redirect("/");
+        }
     });
 });
 
