@@ -4,6 +4,7 @@ const bodyParser = require("body-parser"); //responsavel pela conversao dos dado
 const connection = require("./database/database");
 const perguntaModel = require("./database/Pergunta");
 const Pergunta = require("./database/Pergunta");
+const Resposta = require("./database/Resposta")
 const { where } = require("sequelize");
 
 //Database
@@ -61,7 +62,9 @@ app.get("/pergunta/:id", (req,res) => {
         where: {id : id}
     }).then(p => {
         if (p != undefined) { //se encontrada
-            res.render("pergunta");
+            res.render("pergunta", { //"pergunta = pagina a ser enviada os dados"
+                pergunta : p
+            });
         } else {//Nao encontrada
             res.redirect("/");
         }
