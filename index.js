@@ -62,13 +62,35 @@ app.get("/pergunta/:id", (req,res) => {
         where: {id : id}
     }).then(p => {
         if (p != undefined) { //se encontrada
-            res.render("pergunta", { //"pergunta = pagina a ser enviada os dados"
-                pergunta : p
+
+            Resposta.findAll({
+                where: {perguntaId : p.id},
+                order : [['id','DESC']]
+            }).then(r => {
+                res.render("pergunta", { //"pergunta = pagina a ser enviada os dados"
+                    pergunta : p,
+                    respostas : r
             });
+        });
         } else {//Nao encontrada
             res.redirect("/");
         }
     });
+});
+
+//TABELA RESPOSTA
+
+app.post("/salvarResposta", (req, res) => {
+    var corpo = req.body.corpo;
+    var perguntaId = req.body.perguntaId;
+
+    Resposta.create({
+        corpo : corpo,
+        perguntaId : perguntaId
+    }).then(()=> {
+        console.log("Sua resposta foi salva");
+        res.redirect("/pergunta/"+perguntaId);
+    })
 });
 
 app.listen(8080, ()=> {
